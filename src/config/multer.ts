@@ -1,5 +1,6 @@
 import multer from "multer";
 import crypto from "crypto";
+import "dotenv";
 
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";

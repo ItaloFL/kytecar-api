@@ -4,7 +4,10 @@ import path from "path";
 import cors from "cors";
 import { kyteRoutes } from "./routes/routes";
 import { AppError } from "./errors/AppError/AppError";
+import dotenv from 'dotenv'
 
+
+dotenv.config()
 const app = express();
 app.use(express.json());
 app.use(cors());

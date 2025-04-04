@@ -4,7 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "dev": "tsnd src/server.ts",
+        "dev": "tsnd --env-file=.env  src/server.ts",
         "test": "vitest run",
         "build": "tsup src",
         "start": "node dist/server.js",
