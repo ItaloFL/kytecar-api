@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import multerConfig from "../config/multer";
+import { upload } from "../config/multer";
 import { CreateProductController } from "../modules/product/create-product/create-product-controller";
 import { FindProductByIdController } from "../modules/product/find-product-by-id/find-product-by-id-controller";
 
@@ -19,7 +19,6 @@ import { GetMonthOrdersAmountController } from "../modules/statics/get-month-ord
 import { GetTodayOrdersQuantityController } from "../modules/statics/get-today-orders-quantity/get-today-orders-quantity-controller";
 
 export const kyteRoutes = Router();
-const uploadProductImage = multer(multerConfig);
 
 const createProductController = new CreateProductController();
 const findProductByIdController = new FindProductByIdController();
@@ -39,7 +38,7 @@ const getTodayOrdersQuantityController = new GetTodayOrdersQuantityController();
 //Product ROUTES
 kyteRoutes.post(
   "/products",
-  uploadProductImage.single("imageURL"),
+  upload.single("imageURL"),
   createProductController.handle
 );
 kyteRoutes.get("/products/:id", findProductByIdController.handle);

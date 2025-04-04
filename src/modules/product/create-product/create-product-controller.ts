@@ -7,7 +7,7 @@ import 'dotenv/config'
 export class CreateProductController {
   async handle(request: Request, response: Response) {
     const { name, price, yearCar, brand, details } = request.body;
-    const imageProduct = request.file?.filename;
+    const imageProduct = request.file!;
 
     const priceNumber = convertToNumber(price);
 
@@ -19,7 +19,7 @@ export class CreateProductController {
       yearCar,
       details,
       brand,
-      imageURL: `${process.env.APP_URL}/file/${imageProduct}`,
+      imageURL: imageProduct.path,
     });
 
     return response.json(product);

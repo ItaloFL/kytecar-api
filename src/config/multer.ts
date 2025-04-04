@@ -1,18 +1,23 @@
-import multer from 'multer'
-import path from 'path'
-import crypto from 'crypto'
+import multer from "multer";
+import crypto from "crypto";
 
-const dest = path.resolve(__dirname, '..', '..', 'uploads')
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
-export default {
-  dest,
-  storage: multer.diskStorage({
-    destination: dest,
-    filename: (req, file, callback) => {
-      const filehash = crypto.randomBytes(8)
-      const filename = `${filehash.toString('hex')}-${file.originalname}`
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-      callback(null, filename)
-    }
-  })
-}
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    public_id: (req, file) => {
+      const fileHash = crypto.randomBytes(8).toString("hex");
+      return `${fileHash}-${file.originalname}`;
+    },
+  },
+});
+
+export const upload = multer({ storage });
